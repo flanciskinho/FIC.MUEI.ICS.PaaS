@@ -1,0 +1,396 @@
+\documentclass{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+
+\usepackage{geometry}               % Márgenes del documento
+\usepackage{amsfonts}
+\usepackage{graphicx}
+
+\usepackage[nottoc]{tocbibind}
+
+\usepackage{color}
+\usepackage[pdftex, colorlinks=true, linkcolor=blue, urlcolor=red, filecolor=magenta, citecolor=blue]{hyperref}
+\definecolor{gray97}{gray}{.97}
+\definecolor{gray75}{gray}{.75}
+\definecolor{gray45}{gray}{.45}
+
+\usepackage{listings}
+\usepackage[usenames,dvipsnames]{xcolor}
+\colorlet{keyword}{blue!100!black!80}
+\colorlet{STD}{Lavender}
+\colorlet{comment}{green!80!black!90}
+
+\lstdefinestyle{vhdl}{
+	language     = VHDL,
+	tabsize=3,
+	basicstyle   = \footnotesize \ttfamily,
+	keywordstyle = [1]\color{keyword}\bfseries,
+	keywordstyle = [2]\color{STD}\bfseries,
+	commentstyle = \color{comment}
+	%breaklines=true,                % sets automatic line breaking
+}
+
+\lstdefinestyle{C}{
+	language     = C,
+	tabsize=3,
+	numbers=left, % Donde se situan los numeros
+	frame=single, % Se pone un marco
+	showstringspaces=false, % No muestre el cuadrado en los espacios de los strings
+	backgroundcolor = \color{gray97},
+	basicstyle   = \footnotesize \ttfamily,
+	keywordstyle = [1]\color{keyword}\bfseries,
+	keywordstyle = [2]\color{STD}\bfseries,
+	breaklines=true,                % sets automatic line breaking
+	commentstyle = \color{comment}
+}
+
+\lstdefinestyle{xml}{
+	language     = XML, %basicstyle=\ttfamily\footnotesize,
+	morestring=[b]",
+	moredelim=[s][\bfseries\color{Maroon}]{<}{\ },
+	moredelim=[s][\bfseries\color{Maroon}]{</}{>},
+	moredelim=[l][\bfseries\color{Maroon}]{/>},
+	moredelim=[l][\bfseries\color{Maroon}]{>},
+	morecomment=[s]{<?}{?>},
+	morecomment=[s]{<!--}{-->},
+	commentstyle=\color{comment},
+	stringstyle=\color{blue},
+	identifierstyle=\color{red},		
+	showstringspaces=false,
+	tabsize=3,
+	numbers=left, % Donde se situan los numeros
+	frame=single, % Se pone un marco
+	backgroundcolor = \color{gray97},
+	basicstyle   = \footnotesize \ttfamily,
+	keywordstyle = [1]\color{keyword}\bfseries,
+	keywordstyle = [2]\color{STD}\bfseries,
+	breaklines=true                % sets automatic line breaking
+}
+
+\lstdefinestyle{miniBash}{
+	language     = bash,
+	tabsize=3,
+	numbers=left, % Donde se situan los numeros
+	frame=none, % Se pone un marco
+	showstringspaces=false, % No muestre el cuadrado en los espacios de los strings
+	backgroundcolor = \color{gray97},
+	basicstyle   = \footnotesize \ttfamily,
+	keywordstyle = [1]\color{keyword}\bfseries,
+	keywordstyle = [2]\color{STD}\bfseries,
+	breaklines=true,                % sets automatic line breaking
+	commentstyle = \color{comment}
+}
+
+\lstdefinestyle{instance}{
+	language     = bash,
+	tabsize=3,
+	numbers=left, % Donde se situan los numeros
+	frame=none, % Se pone un marco
+	showstringspaces=false, % No muestre el cuadrado en los espacios de los strings
+	backgroundcolor = \color{gray75},
+	basicstyle   = \footnotesize \ttfamily,
+	keywordstyle = [1]\color{keyword}\bfseries,
+	keywordstyle = [2]\color{STD}\bfseries,
+	breaklines=true,                % sets automatic line breaking
+	commentstyle = \color{comment}
+}
+
+
+\geometry{a4paper}                  % Tamaño y márgenes del documento
+\geometry{left=2.5cm,top=2.5cm}
+\geometry{bottom=2.5cm,right=2.5cm}
+
+\geometry{driver=dvips,pdftex} % ???
+\setcounter{secnumdepth}{5}    % ???
+\setcounter{tocdepth}{5}       % ???
+
+\setlength{\parskip}{\baselineskip} % Espacio entre párrafos (una linea en blanco)
+
+%--------------------------------------------------------------------------
+\title{\textbf{Práctica de Windows Azure}
+%\\ \textbf{\emph{Subir una aplicación web a la plataforma}}
+}
+\author{Francisco Abel Cedrón Santaeufemia \and \textit{francisco.cedron@udc.es}}
+\date{} %Asi no inserta la fecha
+
+\addto\captionsspanish{
+\def\tablename{Tabla}
+\def\listtablename{Índice de tablas}
+}
+
+\begin{document}
+\maketitle % Pone titulo, autor
+\renewcommand{\abstractname}{Abstract} % El nombre que aparece al principio del abstract
+\begin{abstract}
+En este documento se explicará el proceso que se ha seguido para llevar a cabo la realización de la práctica de la asignatura \emph{Informática Como Servicio}. Aquí podrás encontrar los pasos necesarios para subir la aplicación web desarrollada en la asignatura de \emph{Integración de Sistemas} (del curso 2013-2014) a la plataforma de \emph{Windows Azure}.
+\end{abstract}
+\renewcommand{\contentsname}{} % Lo que pone en el indice
+{\setlength{\parskip}{0mm} \tableofcontents} % Para que no ponga espacios entre las lineas de indice
+%\vspace{1cm} % Para dejar un espacio con respecto a la tabla
+
+
+\section{Descripción de la práctica}
+
+\section{Instalación de la aplicación web realizada en Java}
+	Para tratar de emular la arquitectura sobre la que se desarrollo la aplicación web de pujas se hará uso de una máquina virtual con Ubuntu Server (aunque también se podría escoger una máquina con Windows). En ella se instalará la base de datos MySQL además de otros complementos para ver su correcto funcionamiento.
+
+
+\subsection{Creación de la Máquina Virtual con Ubuntu Server}
+
+	Para crear una máquina virtual, tendremos que estar autenticados para acceder a los servicios de nos proporciona Windows Azure\footnote{\url{https://manage.windowsazure.com/@MicrosoftAzurePass.onmicrosoft.com}}. Una vez que iniciamos sesión podremos acceder a la sección de Máquinas virtuales a través del panel que se muestra a la izquierda y una vez ahí pulsaremos el botón de añadir para crear una nueva (véase la figura \ref{fig:VirtualMachineCreate}) en la seleccionaremos la opción de crear una a partir de la galería. Una ver que nos muestre la galería de las imágenes seleccionamos \emph{Ubuntu Server 14.04 LTS} como se puede ver en la figura \ref{fig:VirtualMachineChooseUbuntuServer}. Al continuar nos mostrará un formulario como el de la figura \ref{fig:VirtualMachineConfigUbuntuServer} en el que podemos configurar algunos aspectos de la máquina virtual.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/m_p001.png}
+  \caption{Creación de una máquina virtual a partir de la galería.}
+  \label{fig:VirtualMachineCreate}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/m_p002.png}
+  \caption{Galería de imágenes con Ubuntu.}
+  \label{fig:VirtualMachineChooseUbuntuServer}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/m_p003.png}
+  \caption{Opciones de configuración de una máquina virtual con Ubuntu Server 14.04 LTS.}
+  \label{fig:VirtualMachineConfigUbuntuServer}
+\end{figure}
+
+	El siguiente formulario que nos mostrará sigue siendo sobre la configuración de la máquina virtual tal y como se puede comprobar en la figura \ref{fig:VirtualMachineConfigUbuntuServer2} podremos configurar el nombre DNS que tendrá la máquina. También hay que tener en cuenta de poder añadir alguna regla en el firewall que nos permita conectarnos a la máquina virtual. En este caso dejamos accesible el puerto 22 para poder conectarnos por ssh\footnote{La opción de escoger el puerto ssh es porque ya está instalado en la máquina el servidor OpenSSH}. Una vez finalizado retornaremos al panel de instancias en donde podremos ver que se está iniciando nuestra máquina virtual.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/m_p004.png}
+  \caption{Opciones de configuración de una máquina virtual con Ubuntu Server 14.04 LTS.}
+  \label{fig:VirtualMachineConfigUbuntuServer2}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/m_p006.png}
+  \caption{Panel con las máquinas virtuales.}
+  \label{fig:VirtualMachineConfigUbuntuServer2}
+\end{figure}
+	
+	
+\subsection{Instalación de elementos básicos}
+
+	En este parte vamos empezar por instalar algunos elementos necesarios para poder comprobar que funciona correctamente la aplicación web desarrollada en Java. Para ello accederemos a la máquina desde una terminal accediendo por ssh
+\begin{lstlisting}[style=miniBash]
+$ ssh fcedron@minibay.cloudapp.net
+\end{lstlisting}
+y una vez que estemos dentro de ella empezaremos por instalar el JDK, el servidor de MySQL, un cliente de Subversión y la herramienta Maven. Todo ello lo instalaremos con la siguiente instrucción:
+\begin{lstlisting}[style=miniBash]
+$ sudo apt-get install openjdk-7-jdk mysql-server subersion maven
+\end{lstlisting}
+	Durante el proceso de instalación se nos mostrará la opción de añadir una contraseña para el usuario \emph{root} para la administración de la base de datos (véase figura \ref{fig:setPassRootMySQL}).
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/m_p011.png}
+  \caption{Opción para establecer una contraseña de administrador para MySQL.}
+  \label{fig:setPassRootMySQL}
+\end{figure}
+
+\subsection{Configurando el escenario para realizar las pruebas}
+
+\subsubsection{Creación de las BBDD necesarias}
+	Una vez finalizada la instalación del proceso anterior procederemos a crear las bases de datos en MySQL para ello basta con añadir las siguientes instrucciones
+\begin{lstlisting}[style=miniBash]
+$ mysqladmin -u root create pojo
+$ mysqladmin -u root create pojotest
+\end{lstlisting}
+
+	Ahora añadiremos permisos a un usuario llamado ``\emph{pojo}'' con contraseña ``\emph{pojo}'' para que pueda conectarse a las bases de datos. Para ello accedemos al entorno de MySQL con el usuario root para otorgar los privilegios.
+	Para conectarse al entorno de MySQL
+\begin{lstlisting}[style=miniBash]
+$ mysql -u root 
+\end{lstlisting}	
+y una vez dentro podremos para añadir otorgar los privilegios debemos introducir los siguiente comandos
+\begin{lstlisting}[style=miniBash]
+$ GRANT ALL PRIVILEGIES ON pojo.*     to pojo@localhost IDENTIFIED BY 'pojo';
+$ GRANT ALL PRIVILEGIES ON pojotest.* to pojo@localhost IDENTIFIED BY 'pojo';
+\end{lstlisting}
+para salir del entorno de MySQL basta con introducir la palabra clave \emph{exit}.
+
+\subsubsection{Obteniendo el código fuente para las pruebas de test}
+	Para descargar la práctica de \emph{Integración de Sistemas} podemos hacer uso del repositorio de Subversión que se empleó para la entrega de dicha práctica.
+\begin{lstlisting}[style=miniBash]
+$ svn co https://svn.fic.udc.es/ei5/is/13-14/isg016/minibay/tags/it-2
+\end{lstlisting}	
+
+	Como la práctica supone que puede tener en el repositorio local de Maven la librería de modelutil, hay que incluirla. Una forma de subirlo a la maquina virtual es a través del comando \emph{scp} que emplea por debajo el servidor ssh para intercambiar archivos entre máquinas.
+\begin{lstlisting}[style=miniBash]
+$ scp -r pojo_examples* fcedron@minibay.cloudapp.net:
+\end{lstlisting}	
+
+	Una vez que tenemos el directorio de \emph{pojo-examples} subido usamos maven para añadir las librerías al repositorio local:
+\begin{lstlisting}[style=miniBash]
+$ cd pojo_examples* 
+$ mvn install
+\end{lstlisting}	
+
+	Ahora accedemos al directorio de la práctica de \emph{Integración de Sistemas} para crear las tablas necesarias para la aplicación
+\begin{lstlisting}[style=miniBash]
+$ cd it-2
+$ mvn sql:execute install
+\end{lstlisting}	
+
+Una vez finalizado todo este proceso, podemos hacer uso del servidor de pruebas Jetty para mirar si la aplicación web arranca. Para ello primero permitiremos acceso al servidor desde el firewall. A través del panel de instancias de Windows Azure seleccionamos la instancia y pulsamos la pestaña \emph{Extremos} para añadir la regla. Como podemos hacer mapeo de puertos diremos que el puerto público sera el 80 (reservado para el protocolo http) y el puerto privado que hace accesible el servidor web de nuestra instancia es el 9090. Al final tendremos el panel de configuración como se muestra en la figura \ref{fig:minibayFirewallJetty}.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/p015.png}
+  \caption{Reglas de firewall para la instancia de minibay.}
+  \label{fig:minibayFirewallJetty}
+\end{figure}
+
+\subsection{Configuración del entorno para producción}
+
+	El servidor web Jetty está muy bien para pruebas pero no es una buena opción para un entorno de producción debido a que no libera la memoria que emplea de manera manera eficiente. Por ello procederemos a instalar tomcat desde el repositorio de ubuntu
+\begin{lstlisting}[style=miniBash]
+$ sudo apt-get install tomcat7
+\end{lstlisting}	
+
+	Generamos el paquete \emph{.war} con la aplicación web y lo colocamos en un sitio donde tomcat pueda tener acceso a el
+\begin{lstlisting}[style=miniBash]
+$ mvn package
+$ sudo cp target/minibay.war `find / -name webapss`
+\end{lstlisting}	
+
+También necesitamos añadir el driver de MySQL en la librería de Tomcat para que pueda funcionar correctamente, para ello seleccionamos el que se descargo Maven en su repositorio local para el correcto funcionamiento de las pruebas
+\begin{lstlisting}[style=miniBash]
+$ cp `find $HOME -name "mysql-connector-java*jar"`/usr/share/tomcat7/lib
+\end{lstlisting}	
+
+A mayores también tenemos que configurar el datasource
+\begin{lstlisting}[style=miniBash]
+$ sudo vi `find / -name server.xml`
+\end{lstlisting}	
+y añadir en la etiqueta \emph{GlobalNamingResources} el siguiente texto
+\begin{lstlisting}[style=xml]
+    <Resource name="jdbc/pojo-examples-ds"
+              auth="Container"
+              type="javax.sql.DataSource"
+              driverClassName="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost/pojo"
+              username="pojo"
+              password="pojo"
+              maxActive="4"
+              maxIdle="2"
+              maxWait="10000"
+              removeAbandoned="true"
+              removeAbandonedTimeout="60"
+              logAbandoned="true"
+              validationQuery="SELECT COUNT(*) FROM PingTable"/>
+\end{lstlisting}
+
+También es necesario configurar el recurso dentro del contexto de tomcat. Para ello en un editor modificaremos el archivo
+\begin{lstlisting}[style=miniBash]
+$ sudo vi /etc/tomcat7/context.xml
+\end{lstlisting}	
+y dentro de la etiqueta \emph{Context} añadiremos lo siguiente
+\begin{lstlisting}[style=xml]
+    <ResourceLink name="jdbc/pojo-examples-ds" global="jdbc/pojo-examples-ds"
+                  type="javax.sql.DataSource"/>
+\end{lstlisting}	
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/p022.png}
+  \caption{Añadido el datasource dentro de la configuración del servidor de tomcat7.}
+  \label{fig:tomcatDatasource}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/p023.png}
+  \caption{Añadido el recurso dentro del contexto de tomcat7.}
+  \label{fig:tomcatResource}
+\end{figure}
+
+Una vez realizados todos estos cambios necesitamos reiniciar el servidor de tomcat
+\begin{lstlisting}[style=miniBash]
+$ sudo /etc/init.d/tomcat7 restart
+\end{lstlisting}	
+
+	Como el puerto por defecto de tomcat es el 8080, hay que poder añadir la configuración en el firewall. Para ello modificaremos la regla que usamos para el servidor Jetty y cambiaremos el puerto 9090 por el 8080 como se puede ver en la figura \ref{fig:minibayFirewallTomcat}.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/p026.png}
+  \caption{Reglas de firewall para la instancia de minibay.}
+  \label{fig:minibayFirewallTomcat}
+\end{figure}
+
+	Con esto ya estaría accesible la aplicación web en la dirección \url{http://minibay.cloudapp.net/minibay} como se vee en el ejemplo de la figura \ref{fig:minibay}.
+
+\begin{figure}[h]
+  \centering
+    \includegraphics[width=0.75\textwidth]{img/p027.png}
+  \caption{Página web de la aplicación web realizada en Java.}
+  \label{fig:minibay}
+\end{figure}
+
+%\begin{enumerate}
+%{\setlength{\parskip}{0mm}
+%	\item Lanzar dos instancias en zonas de disponibilidad diferentes.
+%	\item Crear un volumen EBS de 1GB en una de esas zonas y conectarlo a la instancia de esa zona.
+%}
+%\end{enumerate}
+
+
+%\begin{figure}[h]
+%  \centering
+%    \includegraphics[width=0.75\textwidth]{img/m_p4_001.png}
+%  \caption{Servicios disponibles de AWS.}
+%  \label{fig:ChooseIAM}
+%\end{figure}
+
+%\begin{lstlisting}[style=miniBash]
+%$ wget https://s3.amazonaws.com/aws-cli/awscli-bundle.zip
+%$ unzip awscli-bundle.zip
+%$ ./awscli-bundle/install -b $HOME/bin/aws
+%$ echo "export PATH=$PATH:$HOME/bin" >> $HOME/.bash_profile
+%$ touch $HOME/.aws/config
+%\end{lstlisting}
+
+%\begin{lstlisting}
+%[default]
+%aws_access_key_id = AKIAJ6B7ZE52JQVR2K5Q 
+%aws_secret_access_key = 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
+%region = us-east-1
+%output = text
+%\end{lstlisting}
+
+
+\clearpage
+%\newpage
+
+%{\setlength{\parskip}{0mm} \listoftables}
+
+{\setlength{\parskip}{0mm} \listoffigures} % Para que no ponga espacios entre las lineas de indice
+
+% Bibliografía.
+%-----------------------------------------------------------------
+%\clearpage
+%
+%\renewcommand{\bibname}{Referencias}
+%\begin{thebibliography}{99}
+%\bibitem{ENUM4}
+%Actividad propuesta para la cuarta práctica de Amazon Web Services.
+%
+%\url{https://moodle.udc.es/mod/resource/view.php?id=248722}
+%\bibitem{CLI}
+%Interfaz de Línea de comandos de AWS.
+%
+%\url{http://aws.amazon.com/es/cli/}
+%
+%\end{thebibliography}
+
+\end{document}
